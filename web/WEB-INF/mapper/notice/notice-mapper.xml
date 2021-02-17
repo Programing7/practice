@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="insertNotice">
+        INSERT <!-- com.greedy.jsp.notice.model.dao.NoticeDAO#insertNotice() -->
+          INTO TBL_NOTICE A
+          (
+            A.NOTICE_NO
+          , A.NOTICE_TITLE
+          , A.NOTICE_BODY
+          , A.NOTICE_WRITER_MEMBER_NO  
+          )
+          VALUES
+          (
+            SEQ_NOTICE_NO.NEXTVAL
+          , ?
+          , ?
+          , ?  
+          )
+    </entry>
+    <entry key="selectNoticeList">
+        SELECT	/* com.greedy.jsp.notice.model.dao.NoticeDAO#selectAllNoticeList() */
+               A.NOTICE_NO
+             , A.NOTICE_TITLE
+             , A.NOTICE_BODY
+             , A.NOTICE_WRITER_MEMBER_NO
+             , B.NICKNAME
+             , A.NOTICE_COUNT
+             , A.CREATED_DATE
+          FROM TBL_NOTICE A
+          JOIN TBL_MEMBER B ON (A.NOTICE_WRITER_MEMBER_NO = B.MEMBER_NO)
+         WHERE A.NOTICE_STATUS = 'Y'
+         ORDER BY A.NOTICE_NO DESC
+    </entry>
+    <entry key="selectNoticeDetail">
+        SELECT <!-- com.greedy.jsp.notice.model.dao.NoticeDAO#selectNoticeDetail() -->
+               A.NOTICE_NO
+             , A.NOTICE_TITLE
+             , A.NOTICE_BODY
+             , A.NOTICE_WRITER_MEMBER_NO
+             , B.NICKNAME
+             , A.CREATED_DATE
+          FROM TBL_NOTICE A
+          JOIN TBL_MEMBER B ON (A.NOTICE_WRITER_MEMBER_NO = B.MEMBER_NO)
+          WHERE A.NOTICE_STATUS = 'Y'
+            AND A.NOTICE_NO = ?
+    </entry>
+    <entry key="updateNotice">
+        UPDATE <!-- com.greedy.jsp.notice.model.dao.NoticeDAO#updateNotice() -->
+               TBL_NOTICE A
+           SET A.NOTICE_BODY = ?
+         WHERE A.NOTICE_STATUS = 'Y'
+           AND A.NOTICE_NO = ?
+    </entry>
+    <entry key="selectTotalCount">
+        SELECT <!-- com.greedy.jsp.notice.model.dao.NoticeDAO#selectTotalCount() -->
+               COUNT(*)
+          FROM TBL_NOTICE A
+         WHERE A.NOTICE_STATUS = 'Y'
+    </entry>
+</properties>
